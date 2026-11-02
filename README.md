@@ -30,4 +30,3 @@ docker run --rm -p 8000:8000 telegram-news:0.0.1
 Используется один контейнер на базе `python:3.13-slim`.
 Django 5.2.18 устанавливается при сборке из `requirements.txt`.
 HTML-шаблон отдаёт Django через маршрут `/`.
-База данных, миграции, Telethon и docker-compose на этом этапе не используются.

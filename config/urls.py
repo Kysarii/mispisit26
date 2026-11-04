@@ -1,7 +1,8 @@
-from django.urls import path
-from django.views.generic import TemplateView
+from django.urls import include, path
 
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="index.html"), name="home"),
+    path("", include("news.urls")),
 ]
+
+handler404 = "news.views.page_not_found"

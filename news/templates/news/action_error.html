@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Действие не выполнено{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'news:home' %}"><span aria-hidden="true">←</span> На главную</a>
+<div class="error-layout">
+    <section class="panel error-panel" aria-labelledby="error-title">
+        <div class="error-icon"><svg class="icon"><use href="#icon-alert"/></svg></div>
+        <span class="eyebrow">{% if is_demo %}Пример отказа{% else %}Ошибка {{ error_status }}{% endif %}</span>
+        <h1 id="error-title">{% if error_status == 400 %}Новость не добавлена{% elif error_status == 404 %}Страница не найдена{% else %}Действие не выполнено{% endif %}</h1>
+        <p class="error-lead">{% if error_status == 400 %}Система не приняла данные. Посмотрите причину и попробуйте ещё раз.{% else %}Посмотрите причину и воспользуйтесь действиями ниже.{% endif %}</p>
+        <dl class="error-details"><div><dt>Кто</dt><dd>{{ actor }}</dd></div><div><dt>Попытка</dt><dd>{{ action|capfirst }}</dd></div></dl>
+        <div class="error-reasons"><h2>Почему действие отклонено</h2><ul>{% for reason in reasons %}<li>{{ reason }}</li>{% endfor %}</ul></div>
+        {% if is_demo %}<p class="demo-note">Это демонстрационный сценарий: данные не отправлялись. Чтобы проверить настоящий отказ, отправьте форму с пустыми полями или ссылкой на другой сайт.</p>{% endif %}
+        <div class="button-row"><a class="button button-primary" href="{% url 'news:create' %}">{% if is_demo %}Открыть форму{% else %}Вернуться к форме{% endif %}<svg class="icon"><use href="#icon-arrow"/></svg></a><a class="button button-secondary" href="{% url 'news:list' %}">К ленте новостей</a></div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Лента новостей{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">Все публикации под рукой</span><h1>Лента новостей<span class="count-badge">{{ total }}</span></h1><p>Ваша подборка из Telegram-каналов. Новые записи — сверху.</p></div><a class="button button-primary" href="{% url 'news:create' %}"><svg class="icon"><use href="#icon-plus"/></svg>Добавить новость</a></div>
+<form class="search-bar" action="{% url 'news:list' %}" method="get" role="search">
+    <svg class="icon"><use href="#icon-search"/></svg>
+    <label class="visually-hidden" for="news-search">Поиск по новостям и каналам</label>
+    <input id="news-search" type="search" name="q" maxlength="120" value="{{ query }}" placeholder="Поиск по заголовку, тексту или каналу">
+    <button class="button button-primary" type="submit">Найти</button>
+</form>
+{% if query %}<p class="search-summary">По запросу «{{ query }}» найдено: {{ news_items|length }}. <a href="{% url 'news:list' %}">Сбросить поиск</a></p>{% endif %}
+{% if news_items %}
+<div class="news-grid">{% for item in news_items %}{% include 'news/includes/news_card.html' %}{% endfor %}</div>
+<p class="page-note">Метка «Демо» обозначает учебные примеры с вымышленными каналами и ссылками.</p>
+{% else %}
+<div class="empty-state"><svg class="icon"><use href="#icon-search"/></svg><h2>{% if query %}Ничего не найдено{% else %}В ленте пока тихо{% endif %}</h2><p>{% if query %}Попробуйте другое слово или откройте все новости.{% else %}Добавьте первую публикацию — она появится здесь.{% endif %}</p><a class="button button-primary" href="{% if query %}{% url 'news:list' %}{% else %}{% url 'news:create' %}{% endif %}">{% if query %}Все новости{% else %}Добавить новость{% endif %}</a></div>
+{% endif %}
+{% endblock %}

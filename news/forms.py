@@ -47,4 +47,6 @@ class NewsForm(forms.Form):
                 "https://t.me/channel/123. Ссылка на канал без номера публикации не подходит."
             )
         username, post_id = match.groups()
+        if int(post_id) > 9223372036854775807:
+            raise forms.ValidationError("Номер публикации в ссылке слишком большой.")
         return f"https://t.me/{username.lower()}/{post_id}"

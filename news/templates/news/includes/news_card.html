@@ -1,6 +1,6 @@
 <article class="news-card">
-    <div class="card-source"><span class="channel-avatar">{{ item.channel_name|first|upper }}</span><span>{{ item.channel_name }}</span>{% if item.is_demo %}<span class="badge">Демо</span>{% endif %}</div>
+    <div class="card-source"><span class="channel-avatar">{{ item.source.title|first|upper }}</span><span>{{ item.source.title }}</span></div>
     <h2><a href="{% url 'news:detail' item.id %}">{{ item.title }}</a></h2>
-    <p class="card-excerpt">{{ item.body|truncatechars:180 }}</p>
-    <div class="card-bottom"><time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:'d.m.Y · H:i' }}</time><a href="{% url 'news:detail' item.id %}" aria-label="Читать: {{ item.title }}">Читать<svg class="icon"><use href="#icon-arrow"/></svg></a></div>
+    <p class="card-excerpt">{{ item.content_text|truncatechars:180 }}</p>
+    <div class="card-bottom"><time datetime="{{ item.indexed_at|date:'c' }}">{{ item.indexed_at|date:'d.m.Y · H:i' }}</time><a href="{% url 'news:detail' item.id %}" aria-label="Читать: {{ item.title }}">Читать<svg class="icon"><use href="#icon-arrow"/></svg></a></div>
 </article>

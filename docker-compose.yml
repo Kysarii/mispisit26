@@ -1,0 +1,30 @@
+name: mispisit-linkevich
+
+services:
+  app:
+    image: kysarii/mispisit26:0.0.3
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://app:app@db:5432/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17.11
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+volumes:
+  dbdata:

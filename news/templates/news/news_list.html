@@ -11,7 +11,6 @@
 {% if query %}<p class="search-summary">По запросу «{{ query }}» найдено: {{ news_items|length }}. <a href="{% url 'news:list' %}">Сбросить поиск</a></p>{% endif %}
 {% if news_items %}
 <div class="news-grid">{% for item in news_items %}{% include 'news/includes/news_card.html' %}{% endfor %}</div>
-<p class="page-note">Метка «Демо» обозначает учебные примеры с вымышленными каналами и ссылками.</p>
 {% else %}
 <div class="empty-state"><svg class="icon"><use href="#icon-search"/></svg><h2>{% if query %}Ничего не найдено{% else %}В ленте пока тихо{% endif %}</h2><p>{% if query %}Попробуйте другое слово или откройте все новости.{% else %}Добавьте первую публикацию — она появится здесь.{% endif %}</p><a class="button button-primary" href="{% if query %}{% url 'news:list' %}{% else %}{% url 'news:create' %}{% endif %}">{% if query %}Все новости{% else %}Добавить новость{% endif %}</a></div>
 {% endif %}

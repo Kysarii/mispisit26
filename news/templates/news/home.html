@@ -16,8 +16,8 @@
         <div class="preview-heading"><span><svg class="icon"><use href="#icon-lines"/></svg>В вашей ленте</span><span class="live-label">{{ news_count }} записей</span></div>
         {% for item in latest_news %}
         <a class="preview-item" href="{% url 'news:detail' item.id %}">
-            <span class="channel-avatar {% cycle '' 'avatar-blue' 'avatar-amber' %}">{{ item.channel_name|first|upper }}</span>
-            <span class="preview-item-copy"><span class="small-meta">{{ item.channel_name }}</span><strong>{{ item.title }}</strong></span>
+            <span class="channel-avatar {% cycle '' 'avatar-blue' 'avatar-amber' %}">{{ item.source.title|first|upper }}</span>
+            <span class="preview-item-copy"><span class="small-meta">{{ item.source.title }}</span><strong>{{ item.title }}</strong></span>
             <svg class="icon"><use href="#icon-arrow"/></svg>
         </a>
         {% empty %}

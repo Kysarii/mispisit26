@@ -1,6 +1,9 @@
 import os
 import secrets
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
+
+from django.core.exceptions import ImproperlyConfigured
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +25,30 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-DATABASES = {}
+database_url = urlsplit(os.environ.get("DATABASE_URL", ""))
+if (
+    database_url.scheme not in {"postgres", "postgresql"}
+    or not database_url.hostname
+    or not database_url.username
+    or not database_url.password
+    or not database_url.path.strip("/")
+):
+    raise ImproperlyConfigured(
+        "Задайте DATABASE_URL с адресом PostgreSQL, именем базы, логином и паролем."
+    )
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": unquote(database_url.path.lstrip("/")),
+        "USER": unquote(database_url.username),
+        "PASSWORD": unquote(database_url.password),
+        "HOST": database_url.hostname,
+        "PORT": database_url.port or 5432,
+        "OPTIONS": {"connect_timeout": 5},
+    }
+}
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 CSRF_FAILURE_VIEW = "news.views.csrf_failure"
 
@@ -41,4 +67,3 @@ LANGUAGE_CODE = "ru"
 TIME_ZONE = "Europe/Astrakhan"
 USE_TZ = True
 STATIC_URL = "/static/"
-NEWS_DATA_FILE = Path(os.environ.get("NEWS_DATA_FILE", BASE_DIR / "data" / "news.json"))

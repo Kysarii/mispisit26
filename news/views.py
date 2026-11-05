@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_GET, require_http_methods
 
 from .forms import NewsForm
-from .storage import DuplicateNewsError, StorageError, create_news, list_news
+from .storage import DuplicateNewsError, StorageError, create_news, get_news, list_news
 
 
 def _render_error(request, *, action, reasons, status=400, is_demo=False):
@@ -12,7 +12,7 @@ def _render_error(request, *, action, reasons, status=400, is_demo=False):
         request,
         "news/action_error.html",
         {
-            "actor": "Пользователь демоверсии",
+            "actor": "Пользователь",
             "action": action,
             "reasons": reasons,
             "error_status": status,
@@ -44,25 +44,20 @@ def home(request):
         request,
         "news/home.html",
         {"latest_news": items[:3], "news_count": len(items),
-         "channel_count": len({item["source_url"].removeprefix("https://t.me/").partition("/")[0] for item in items})},
+         "channel_count": len({item.source_id for item in items})},
     )
 
 
 @require_GET
 def news_list(request):
+    query = request.GET.get("q", "").strip()[:120]
     try:
         items = list_news()
+        total = len(items)
+        if query:
+            items = list_news(query)
     except StorageError:
         return _storage_error(request)
-    query = request.GET.get("q", "").strip()[:120]
-    total = len(items)
-    if query:
-        items = [
-            item for item in items
-            if query.casefold() in " ".join(
-                item[key] for key in ("title", "body", "channel_name")
-            ).casefold()
-        ]
     return render(request, "news/news_list.html", {"news_items": items, "query": query, "total": total})
 
 
@@ -81,7 +76,7 @@ def news_create(request):
             else:
                 request.session.pop("action_error", None)
                 response = HttpResponseRedirect(
-                    reverse("news:detail", args=[item["id"]]) + "?created=1"
+                    reverse("news:detail", args=[item.pk]) + "?created=1"
                 )
                 response.status_code = 303
                 return response
@@ -101,7 +96,7 @@ def news_create(request):
 @require_GET
 def news_detail(request, news_id):
     try:
-        item = next((item for item in list_news() if item["id"] == news_id), None)
+        item = get_news(news_id)
     except StorageError:
         return _storage_error(request)
     if item is None:

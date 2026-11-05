@@ -1,1 +1,4 @@
+# Web framework, templates, forms, ORM and schema migrations.
 Django==5.2.18
+# PostgreSQL driver for Django; binary extra includes libpq in the container.
+psycopg[binary]==3.2.12

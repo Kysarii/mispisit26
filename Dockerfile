@@ -9,9 +9,9 @@ COPY manage.py ./
 COPY config/ ./config/
 COPY templates/ ./templates/
 COPY news/ ./news/
-
-RUN mkdir -p /app/data
+COPY docker-entrypoint.py ./
 
 EXPOSE 8000
 
+ENTRYPOINT ["python", "docker-entrypoint.py"]
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000", "--noreload", "--insecure"]

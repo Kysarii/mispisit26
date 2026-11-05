@@ -11,7 +11,7 @@
 
 Ветка: `lab3`
 
-Pull Request: будет добавлен позже.
+Pull Request: [https://github.com/Kysarii/mispisit26/pull/3](https://github.com/Kysarii/mispisit26/pull/3)
 
 Образ: `kysarii/mispisit26:0.0.3`
 

@@ -1,4 +1,4 @@
-<article class="news-card">
+<article class="card news-card">
     <div class="card-source"><span class="channel-avatar">{{ item.source.title|first|upper }}</span><span>{{ item.source.title }}</span></div>
     <h2><a href="{% url 'news:detail' item.id %}">{{ item.title }}</a></h2>
     <p class="card-excerpt">{{ item.content_text|truncatechars:180 }}</p>

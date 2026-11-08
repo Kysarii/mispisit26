@@ -3,17 +3,17 @@
 {% block content %}
 <section class="hero">
     <div class="hero-copy">
-        <span class="eyebrow"><span class="status-dot"></span>Ваша подборка из Telegram</span>
-        <h1>Новости каналов.<br><span>В одном месте.</span></h1>
-        <p class="hero-description">Сохраняйте интересные публикации, собирайте свою ленту и возвращайтесь к тому, что важно.</p>
+        <span class="eyebrow"><span class="status-dot"></span>Управление публикациями</span>
+        <h1>Публикации Telegram.<br><span>Под контролем.</span></h1>
+        <p class="hero-description">Добавляйте публикации каналов, проверяйте сохранённые материалы и находите нужные записи в общей базе.</p>
         <div class="button-row">
-            <a class="button button-primary" href="{% url 'news:list' %}">Открыть ленту<svg class="icon"><use href="#icon-arrow"/></svg></a>
-            <a class="button button-secondary" href="{% url 'news:create' %}">Добавить новость</a>
+            <a class="btn button button-primary btn-primary" href="{% url 'news:list' %}">Открыть публикации<svg class="icon"><use href="#icon-arrow"/></svg></a>
+            <a class="btn button button-secondary btn-outline-secondary" href="{% url 'news:create' %}">Добавить новость</a>
         </div>
-        <p class="hero-note">Сейчас публикации добавляются вручную — по ссылке на пост.</p>
+        <p class="hero-note">Рабочая панель администратора. Публикации добавляются вручную по ссылке на пост Telegram.</p>
     </div>
     <div class="hero-preview">
-        <div class="preview-heading"><span><svg class="icon"><use href="#icon-lines"/></svg>В вашей ленте</span><span class="live-label">{{ news_count }} записей</span></div>
+        <div class="preview-heading"><span><svg class="icon"><use href="#icon-lines"/></svg>Последние публикации</span><span class="live-label">{{ news_count }} записей</span></div>
         {% for item in latest_news %}
         <a class="preview-item" href="{% url 'news:detail' item.id %}">
             <span class="channel-avatar {% cycle '' 'avatar-blue' 'avatar-amber' %}">{{ item.source.title|first|upper }}</span>
@@ -21,17 +21,17 @@
             <svg class="icon"><use href="#icon-arrow"/></svg>
         </a>
         {% empty %}
-        <div class="preview-empty">Здесь появятся ваши новости. Начните с первой публикации.</div>
+        <div class="preview-empty">Публикаций пока нет. Добавьте первую запись в базу.</div>
         {% endfor %}
-        <div class="preview-footer"><span>{{ channel_count }} источников</span><a href="{% url 'news:list' %}">Вся лента <span aria-hidden="true">↗</span></a></div>
+        <div class="preview-footer"><span>{{ channel_count }} источников</span><a href="{% url 'news:list' %}">Все публикации <span aria-hidden="true">↗</span></a></div>
     </div>
 </section>
 <section class="workflow" aria-labelledby="workflow-title">
-    <div class="section-heading"><div><span class="eyebrow">Просто и по делу</span><h2 id="workflow-title">От публикации до вашей ленты</h2></div><span class="section-caption">Три действия, с которых всё начинается</span></div>
+    <div class="section-heading"><div><span class="eyebrow">Рабочие действия</span><h2 id="workflow-title">Управление новостями</h2></div><span class="section-caption">Добавление, просмотр и проверка отказа</span></div>
     <div class="workflow-grid">
-        <a class="workflow-card" href="{% url 'news:create' %}"><span class="step-number">01 / СОХРАНИТЬ</span><svg class="feature-icon icon"><use href="#icon-plus"/></svg><h3>Добавьте новость</h3><p>Укажите заголовок, канал, текст и ссылку на публикацию.</p><span class="text-link">Перейти к форме <span aria-hidden="true">→</span></span></a>
-        <a class="workflow-card" href="{% url 'news:list' %}"><span class="step-number">02 / ПРОЧИТАТЬ</span><svg class="feature-icon icon"><use href="#icon-lines"/></svg><h3>Откройте ленту</h3><p>Найдите нужную запись и прочитайте её целиком в карточке.</p><span class="text-link">Смотреть новости <span aria-hidden="true">→</span></span></a>
-        <a class="workflow-card" href="{% url 'news:error' %}?demo=1"><span class="step-number">03 / ПРОВЕРИТЬ</span><svg class="feature-icon feature-amber icon"><use href="#icon-alert"/></svg><h3>Понятный отказ</h3><p>Если данные не подходят, система объяснит причину и подскажет, что исправить.</p><span class="text-link">Посмотреть пример <span aria-hidden="true">→</span></span></a>
+        <a class="card workflow-card" href="{% url 'news:create' %}"><span class="step-number">01 / СОХРАНИТЬ</span><svg class="feature-icon icon"><use href="#icon-plus"/></svg><h3>Добавьте новость</h3><p>Укажите заголовок, канал, текст и ссылку на публикацию.</p><span class="text-link">Перейти к форме <span aria-hidden="true">→</span></span></a>
+        <a class="card workflow-card" href="{% url 'news:list' %}"><span class="step-number">02 / ПРОСМОТРЕТЬ</span><svg class="feature-icon icon"><use href="#icon-lines"/></svg><h3>Проверьте публикации</h3><p>Найдите сохранённую запись и проверьте её содержимое в карточке.</p><span class="text-link">К списку публикаций <span aria-hidden="true">→</span></span></a>
+        <a class="card workflow-card" href="{% url 'news:error' %}?demo=1"><span class="step-number">03 / ПРОВЕРИТЬ</span><svg class="feature-icon feature-amber icon"><use href="#icon-alert"/></svg><h3>Понятный отказ</h3><p>Если данные не подходят, система объяснит причину и подскажет, что исправить.</p><span class="text-link">Посмотреть пример <span aria-hidden="true">→</span></span></a>
     </div>
 </section>
 {% endblock %}

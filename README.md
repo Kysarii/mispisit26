@@ -7,28 +7,16 @@
 Стек: Python 3.13, Django 5.2.18, Django Templates, Bootstrap 5.3.8,
 HTML/CSS, PostgreSQL 17.11, Django ORM.
 
-## Интерфейс
-
-С данными работает администратор: добавляет публикации и проверяет их в списке
-и карточке. Интерфейс расположен в приложении `app` и собирается Django Templates.
-Клиентский интерфейс Telegram-бота в эту версию не входит.
-
-Bootstrap 5.3.8 используется для кнопок, навигации, карточек, полей формы и сообщений.
-Его CSS и лицензия находятся в `news/static/news/vendor/bootstrap/` и входят
-в Docker-образ. Внешний CDN при открытии страниц не используется.
-Собственные стили сохраняют зелёную палитру и адаптивное оформление.
-
 ## Запуск
 
 Репозиторий: [https://github.com/Kysarii/mispisit26](https://github.com/Kysarii/mispisit26)
 
-Ветка для сдачи: `lab4` (создаётся при подготовке публикации).
+Ветка: `lab4`.
 
-Pull Request: ссылка добавляется после создания PR для лабораторной №4.
+Pull Request: [https://github.com/Kysarii/mispisit26/pull/4](https://github.com/Kysarii/mispisit26/pull/4).
 
-Образ для публикации: `kysarii/mispisit26:0.0.4`.
+Образ: `kysarii/mispisit26:0.0.4`.
 
-Перед запуском по инструкции ниже опубликуйте образ `0.0.4` и ветку `lab4`.
 
 Страница образа: [https://hub.docker.com/r/kysarii/mispisit26](https://hub.docker.com/r/kysarii/mispisit26)
 

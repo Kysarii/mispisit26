@@ -9,14 +9,14 @@ class NewsForm(forms.Form):
         label="Заголовок",
         max_length=160,
         help_text="Коротко о главном. До 160 символов.",
-        widget=forms.TextInput(attrs={"placeholder": "Что произошло?", "autofocus": True}),
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Что произошло?", "autofocus": True}),
         error_messages={"required": "Укажите заголовок новости."},
     )
     channel_name = forms.CharField(
         label="Название канала",
         max_length=80,
-        help_text="Так источник будет подписан в ленте.",
-        widget=forms.TextInput(attrs={"placeholder": "Например, Новости технологий"}),
+        help_text="Название источника в списке публикаций.",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Например, Новости технологий"}),
         error_messages={"required": "Укажите название Telegram-канала."},
     )
     source_url = forms.URLField(
@@ -24,7 +24,7 @@ class NewsForm(forms.Form):
         max_length=300,
         assume_scheme="https",
         help_text="Публичная публикация: https://t.me/channel/123",
-        widget=forms.URLInput(attrs={"placeholder": "https://t.me/channel/123"}),
+        widget=forms.URLInput(attrs={"class": "form-control", "placeholder": "https://t.me/channel/123"}),
         error_messages={
             "required": "Добавьте ссылку на публикацию в Telegram.",
             "invalid": "Введите корректную ссылку вида https://t.me/channel/123.",
@@ -33,8 +33,8 @@ class NewsForm(forms.Form):
     body = forms.CharField(
         label="Текст новости",
         max_length=10000,
-        help_text="Текст или ваша краткая выжимка. До 10 000 символов.",
-        widget=forms.Textarea(attrs={"rows": 8, "placeholder": "Расскажите о новости…"}),
+        help_text="Текст публикации или краткое содержание. До 10 000 символов.",
+        widget=forms.Textarea(attrs={"class": "form-control", "rows": 8, "placeholder": "Расскажите о новости…"}),
         error_messages={"required": "Добавьте текст новости."},
     )
 

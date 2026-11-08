@@ -58,7 +58,7 @@ def create_news(data):
     except IntegrityError as exc:
         constraint = getattr(getattr(exc.__cause__, "diag", None), "constraint_name", None)
         if constraint == "unique_source_external_id":
-            raise DuplicateNewsError("Новость с этой ссылкой уже есть в ленте.") from exc
+            raise DuplicateNewsError("Публикация с этой ссылкой уже есть в базе.") from exc
         raise StorageError("Не удалось сохранить новость в базе данных.") from exc
     except DatabaseError as exc:
         raise StorageError("Не удалось сохранить новость в базе данных.") from exc

@@ -12,6 +12,12 @@
     --amber: #9b641d;
     --amber-light: #fcf4e7;
     --radius: 16px;
+    --bs-body-color: var(--ink);
+    --bs-body-bg: var(--paper);
+    --bs-primary: #146b5c;
+    --bs-primary-rgb: 20, 107, 92;
+    --bs-link-color: var(--green);
+    --bs-link-hover-color: var(--green-dark);
 }
 
 * { box-sizing: border-box; }
@@ -27,7 +33,7 @@ h1, h2, h3 { line-height: 1.25; letter-spacing: -.035em; }
 h1 { font-size: clamp(30px, 3.5vw, 42px); font-weight: 700; margin-bottom: 14px; }
 h2 { font-size: 26px; font-weight: 650; }
 h3 { font-size: 21px; font-weight: 650; }
-.container { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+.container { width: min(1160px, calc(100% - 64px)); max-width: none; padding-inline: 0; margin-inline: auto; }
 .icon-definitions { position: absolute; width: 0; height: 0; overflow: hidden; }
 .icon { width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .skip-link { position: absolute; top: -80px; left: 20px; padding: 12px 18px; background: white; z-index: 10; }
@@ -38,7 +44,7 @@ h3 { font-size: 21px; font-weight: 650; }
 .brand-icon { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 13px; background: var(--green); color: white; }
 .brand-icon .icon { width: 26px; height: 26px; }
 .brand-subtitle { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .04em; }
-.navigation { display: flex; align-items: center; gap: 25px; }
+.navigation { display: flex; flex-wrap: nowrap; align-items: center; gap: 25px; }
 .navigation a { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--muted); white-space: nowrap; }
 .navigation a:hover, .navigation a[aria-current="page"] { color: var(--green); }
 .navigation .nav-create { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border: 1px solid #c9dad0; border-radius: 8px; color: var(--green); background: #f5f9f5; }
@@ -52,6 +58,9 @@ h3 { font-size: 21px; font-weight: 650; }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .12em; font-weight: 700; text-transform: uppercase; color: var(--green); margin-bottom: 17px; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 11px 20px; border-radius: 8px; border: 1px solid transparent; font-size: 13px; line-height: 1.5; font-weight: 600; text-decoration: none; transition: background .15s, border-color .15s; }
 .button-primary { background: var(--green); color: white; }
+.btn-primary { --bs-btn-bg: var(--green); --bs-btn-border-color: var(--green); --bs-btn-hover-bg: var(--green-dark); --bs-btn-hover-border-color: var(--green-dark); --bs-btn-active-bg: var(--green-dark); --bs-btn-active-border-color: var(--green-dark); --bs-btn-focus-shadow-rgb: 20, 107, 92; }
+.btn-outline-secondary { --bs-btn-color: var(--ink); --bs-btn-border-color: #cddad1; --bs-btn-hover-color: var(--ink); --bs-btn-hover-bg: #f2f6f1; --bs-btn-hover-border-color: #cddad1; --bs-btn-active-color: var(--ink); --bs-btn-active-bg: #eaf3ee; }
+.form-control:focus { border-color: #609f91; box-shadow: 0 0 0 .2rem #146b5c20; }
 .button-primary:hover { background: var(--green-dark); color: white; }
 .button-secondary { border-color: #cddad1; background: white; color: var(--ink); }
 .button-secondary:hover { background: #f2f6f1; }
@@ -64,7 +73,7 @@ h3 { font-size: 21px; font-weight: 650; }
 .hero h1 span { color: var(--green); }
 .hero-description { max-width: 435px; margin-bottom: 27px; color: #53685b; font-size: 16px; line-height: 1.75; }
 .hero-note { font-size: 11px; line-height: 1.6; color: var(--muted); margin: 18px 0 0; max-width: 350px; }
-.hero-preview { background: #fff; border-radius: 14px; box-shadow: 0 14px 36px #23372a0a; border: 1px solid #dee6dc; overflow: hidden; transform: rotate(-1.3deg); }
+.hero-preview { background: #fff; border-radius: 14px; box-shadow: 0 14px 36px #23372a0a; border: 1px solid #dee6dc; overflow: hidden; }
 .preview-heading { display: flex; justify-content: space-between; gap: 8px; align-items: center; padding: 20px; border-bottom: 1px solid #edf0ea; font-size: 12px; font-weight: 650; }
 .preview-heading > span:first-child { display: flex; align-items: center; gap: 9px; }
 .preview-heading .icon { color: var(--green); width: 17px; }

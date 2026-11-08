@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#146b5c">
-    <meta name="description" content="Агрегатор новостей Telegram: сохраняйте интересные публикации и читайте их в одной ленте.">
+    <meta name="description" content="Панель администратора агрегатора новостей Telegram: добавление, проверка и просмотр публикаций.">
     <title>{% block title %}Главная{% endblock %} — Агрегатор новостей Telegram</title>
+    <link rel="stylesheet" href="{% static 'news/vendor/bootstrap/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'news/styles.css' %}">
     <link rel="icon" href="{% static 'news/favicon.svg' %}" type="image/svg+xml">
 </head>
@@ -26,12 +27,12 @@
         <div class="container header-inner">
             <a class="brand" href="{% url 'news:home' %}" aria-label="Агрегатор новостей Telegram — главная">
                 <span class="brand-icon"><svg class="icon"><use href="#icon-plane"/></svg></span>
-                <span>Агрегатор новостей<span class="brand-subtitle">Telegram</span></span>
+                <span>Агрегатор новостей<span class="brand-subtitle">Панель администратора · Telegram</span></span>
             </a>
-            <nav class="navigation" aria-label="Основная навигация">
+            <nav class="nav navigation" aria-label="Основная навигация">
                 {% with current=request.resolver_match.url_name %}
                 <a href="{% url 'news:home' %}" {% if current == 'home' %}aria-current="page"{% endif %}>Главная</a>
-                <a href="{% url 'news:list' %}" {% if current == 'list' or current == 'detail' %}aria-current="page"{% endif %}>Лента новостей</a>
+                <a href="{% url 'news:list' %}" {% if current == 'list' or current == 'detail' %}aria-current="page"{% endif %}>Публикации</a>
                 <a href="{% url 'news:error' %}?demo=1" {% if current == 'error' %}aria-current="page"{% endif %}>Пример отказа</a>
                 <a class="nav-create" href="{% url 'news:create' %}" {% if current == 'create' %}aria-current="page"{% endif %}><svg class="icon"><use href="#icon-plus"/></svg>Добавить новость</a>
                 {% endwith %}
@@ -44,7 +45,7 @@
     <footer class="site-footer">
         <div class="container footer-inner">
             <span>Агрегатор новостей Telegram</span>
-            <span><span class="status-dot"></span>Учебный проект <span class="footer-version">v0.0.3</span></span>
+            <span><span class="status-dot"></span>Панель администратора <span class="footer-version">v0.0.4</span></span>
         </div>
     </footer>
 </body>

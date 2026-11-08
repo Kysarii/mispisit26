@@ -1,26 +1,41 @@
 # Агрегатор новостей Telegram
 
-Система для ручного сохранения публикаций из Telegram-каналов и просмотра общей ленты.
+Административная веб-панель для ручного сохранения публикаций из Telegram-каналов
+и проверки записей в общей базе. Версия приложения: **0.0.4**.
 Лабораторные работы по дисциплине МиСПИСИТ.
 
-Стек: Python 3.13, Django 5.2.18, Django Templates, HTML/CSS, PostgreSQL 17.11, Django ORM.
+Стек: Python 3.13, Django 5.2.18, Django Templates, Bootstrap 5.3.8,
+HTML/CSS, PostgreSQL 17.11, Django ORM.
+
+## Интерфейс
+
+С данными работает администратор: добавляет публикации и проверяет их в списке
+и карточке. Интерфейс расположен в приложении `app` и собирается Django Templates.
+Клиентский интерфейс Telegram-бота в эту версию не входит.
+
+Bootstrap 5.3.8 используется для кнопок, навигации, карточек, полей формы и сообщений.
+Его CSS и лицензия находятся в `news/static/news/vendor/bootstrap/` и входят
+в Docker-образ. Внешний CDN при открытии страниц не используется.
+Собственные стили сохраняют зелёную палитру и адаптивное оформление.
 
 ## Запуск
 
 Репозиторий: [https://github.com/Kysarii/mispisit26](https://github.com/Kysarii/mispisit26)
 
-Ветка: `lab3`
+Ветка для сдачи: `lab4` (создаётся при подготовке публикации).
 
-Pull Request: [https://github.com/Kysarii/mispisit26/pull/3](https://github.com/Kysarii/mispisit26/pull/3)
+Pull Request: ссылка добавляется после создания PR для лабораторной №4.
 
-Образ: `kysarii/mispisit26:0.0.3`
+Образ для публикации: `kysarii/mispisit26:0.0.4`.
+
+Перед запуском по инструкции ниже опубликуйте образ `0.0.4` и ветку `lab4`.
 
 Страница образа: [https://hub.docker.com/r/kysarii/mispisit26](https://hub.docker.com/r/kysarii/mispisit26)
 
 Для запуска нужен Docker с поддержкой Docker Compose.
 
 ```sh
-git clone -b lab3 https://github.com/Kysarii/mispisit26
+git clone -b lab4 https://github.com/Kysarii/mispisit26
 cd mispisit26
 docker compose up -d
 ```
@@ -33,8 +48,8 @@ docker compose up -d
 
 | Адрес | Что на странице |
 | --- | --- |
-| [http://localhost:8000/](http://localhost:8000/) | Главная, версия приложения, последние новости и переходы к действиям |
-| [http://localhost:8000/news/](http://localhost:8000/news/) | Лента новостей и поиск по заголовку, тексту и названию канала |
+| [http://localhost:8000/](http://localhost:8000/) | Главная административной панели, версия приложения, последние публикации и переходы к действиям |
+| [http://localhost:8000/news/](http://localhost:8000/news/) | Список публикаций и поиск по заголовку, тексту и названию канала |
 | [http://localhost:8000/news/new/](http://localhost:8000/news/new/) | Форма добавления новости: заголовок, название канала, ссылка на публикацию и текст |
 | `http://localhost:8000/news/<id>/` | Карточка сохранённой новости: полный текст, канал, время добавления и ссылка на оригинал; вместо `<id>` указывается номер записи |
 | [http://localhost:8000/action-error/](http://localhost:8000/action-error/) | Причина последнего отказа: кто, что пытался сделать и почему действие отклонено; при первом открытии — пример |

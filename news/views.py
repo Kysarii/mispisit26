@@ -12,7 +12,7 @@ def _render_error(request, *, action, reasons, status=400, is_demo=False):
         request,
         "news/action_error.html",
         {
-            "actor": "Пользователь",
+            "actor": "Администратор",
             "action": action,
             "reasons": reasons,
             "error_status": status,
@@ -103,7 +103,7 @@ def news_detail(request, news_id):
         return _render_error(
             request,
             action=f"открыть новость №{news_id}",
-            reasons=["Новость с таким номером не найдена. Проверьте адрес или вернитесь в ленту."],
+            reasons=["Новость с таким номером не найдена. Проверьте адрес или вернитесь к списку публикаций."],
             status=404,
         )
     return render(request, "news/news_detail.html", {"item": item, "created": request.GET.get("created") == "1"})
@@ -117,7 +117,7 @@ def action_error(request):
         ["Ссылка ведёт на другой сайт. Нужна публичная публикация Telegram вида https://t.me/channel/123."]
         if is_demo else error["reasons"]
     )
-    return _render_error(request, action="добавить новость в ленту", reasons=reasons, is_demo=is_demo)
+    return _render_error(request, action="добавить публикацию в базу", reasons=reasons, is_demo=is_demo)
 
 
 def page_not_found(request, exception):

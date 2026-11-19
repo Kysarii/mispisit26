@@ -2,7 +2,7 @@
 {% block title %}{{ item.title }}{% endblock %}
 {% block content %}
 <a class="back-link" href="{% url 'news:list' %}"><span aria-hidden="true">←</span> К списку публикаций</a>
-{% if created %}<div class="alert alert-success notice notice-success" role="status"><svg class="icon"><use href="#icon-check"/></svg><span><strong>Новость сохранена.</strong> Запись добавлена в базу и доступна в списке публикаций.</span></div>{% endif %}
+{% if created %}<div class="alert alert-success notice notice-success" role="status"><svg class="icon"><use href="#icon-check"/></svg><span><strong>Новость сохранена.</strong> Запись добавлена в базу. <a href="{% url 'news:notifications' %}">Посмотреть уведомление</a></span></div>{% endif %}
 <div class="content-layout detail-layout">
     <article class="card panel article-panel">
         <div class="article-kicker"><span class="eyebrow">Публикация №{{ item.id }}</span></div>

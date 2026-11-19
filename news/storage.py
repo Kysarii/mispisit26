@@ -4,8 +4,9 @@ from urllib.parse import urlsplit
 
 from django.db import DatabaseError, IntegrityError, transaction
 from django.db.models import Q
+from django.utils import timezone
 
-from .models import Publication, Source
+from .models import Notification, Publication, Source
 
 
 class StorageError(Exception):
@@ -49,12 +50,14 @@ def create_news(data):
                 link=f"https://t.me/{username}",
                 defaults={"title": data["channel_name"]},
             )
-            return Publication.objects.create(
+            publication = Publication.objects.create(
                 source=source,
                 external_id=int(post_id),
                 title=data["title"],
                 content_text=data["body"],
             )
+            Notification.objects.create(publication=publication)
+            return publication
     except IntegrityError as exc:
         constraint = getattr(getattr(exc.__cause__, "diag", None), "constraint_name", None)
         if constraint == "unique_source_external_id":
@@ -62,3 +65,23 @@ def create_news(data):
         raise StorageError("Не удалось сохранить новость в базе данных.") from exc
     except DatabaseError as exc:
         raise StorageError("Не удалось сохранить новость в базе данных.") from exc
+
+
+def list_notifications():
+    try:
+        return list(Notification.objects.select_related("publication__source"))
+    except DatabaseError as exc:
+        raise StorageError("Не удалось прочитать уведомления из базы данных.") from exc
+
+
+def mark_notification_read(notification_id):
+    if notification_id > 9223372036854775807:
+        return False
+    try:
+        notification = Notification.objects.filter(pk=notification_id)
+        if not notification.exists():
+            return False
+        notification.filter(read_at__isnull=True).update(read_at=timezone.now())
+        return True
+    except DatabaseError as exc:
+        raise StorageError("Не удалось изменить статус уведомления.") from exc

@@ -47,6 +47,8 @@ h3 { font-size: 21px; font-weight: 650; }
 .navigation { display: flex; flex-wrap: nowrap; align-items: center; gap: 25px; }
 .navigation a { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--muted); white-space: nowrap; }
 .navigation a:hover, .navigation a[aria-current="page"] { color: var(--green); }
+.nav-notifications { display: inline-flex; align-items: center; gap: 6px; }
+.notification-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 19px; height: 19px; padding-inline: 5px; border-radius: 999px; background: #b42318; color: white; font-size: 10px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
 .navigation .nav-create { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border: 1px solid #c9dad0; border-radius: 8px; color: var(--green); background: #f5f9f5; }
 .navigation .nav-create:hover { background: var(--green-light); }
 .main-content { flex: 1; padding-top: 44px; padding-bottom: 72px; }
@@ -187,6 +189,21 @@ h3 { font-size: 21px; font-weight: 650; }
 .error-reasons li:last-child { margin-bottom: 0; }
 .demo-note { font-size: 12px; color: var(--muted); margin-bottom: 26px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+.notification-list { display: grid; gap: 20px; max-width: 900px; }
+.notification-card { padding: 28px; overflow-wrap: anywhere; }
+.notification-new { border-left: 4px solid var(--green); }
+.notification-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 18px; }
+.notification-heading time, .notification-meta, .notification-read-time { color: var(--muted); font-size: 12px; }
+.notification-status { background: var(--green-light); color: var(--green); border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 650; }
+.notification-status-read { background: #f0f2ee; color: var(--muted); }
+.notification-card h2 { font-size: 21px; margin-bottom: 10px; }
+.notification-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.notification-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding-top: 18px; margin-top: 20px; border-top: 1px solid var(--border); }
+.notification-actions form { margin: 0; }
+.notification-empty { align-items: start; padding: 38px; }
+.notification-empty .brand-icon { margin-bottom: 24px; }
+.notification-empty p { color: var(--muted); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media (max-width: 1050px) {

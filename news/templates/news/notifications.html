@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Уведомления{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div><span class="eyebrow">Обратная связь</span><h1>Уведомления</h1><p>Сообщения о сохранённых публикациях. Непрочитанных: {{ unread_count }}.</p></div>
+    <a class="btn button button-primary btn-primary" href="{% url 'news:create' %}"><svg class="icon"><use href="#icon-plus"/></svg>Добавить новость</a>
+</div>
+<div class="notification-list">
+    {% for notification in notifications %}
+    <article class="card panel notification-card {% if not notification.read_at %}notification-new{% endif %}" aria-labelledby="notification-{{ notification.id }}">
+        <div class="notification-heading">
+            <span class="notification-status {% if notification.read_at %}notification-status-read{% endif %}">{% if notification.read_at %}Прочитано{% else %}Новое{% endif %}</span>
+            <time datetime="{{ notification.created_at|date:'c' }}">{{ notification.created_at|date:'d.m.Y H:i:s' }}</time>
+        </div>
+        <h2 id="notification-{{ notification.id }}">{{ notification.get_event_type_display }}</h2>
+        <p class="notification-title"><a href="{% url 'news:detail' notification.publication_id %}">{{ notification.publication.title }}</a></p>
+        <p class="notification-meta">Публикация №{{ notification.publication_id }} · Канал: {{ notification.publication.source.title }}</p>
+        <div class="notification-actions">
+            <a class="text-link" href="{% url 'news:detail' notification.publication_id %}">Открыть публикацию <span aria-hidden="true">→</span></a>
+            {% if notification.read_at %}
+            <span class="notification-read-time">Прочитано {{ notification.read_at|date:'d.m.Y H:i:s' }}</span>
+            {% else %}
+            <form method="post" action="{% url 'news:notification_read' notification.id %}">
+                {% csrf_token %}
+                <button class="btn button button-secondary btn-outline-secondary" type="submit">Отметить прочитанным<span class="visually-hidden">: {{ notification.publication.title }}</span></button>
+            </form>
+            {% endif %}
+        </div>
+    </article>
+    {% empty %}
+    <section class="card panel notification-empty">
+        <span class="brand-icon"><svg class="icon"><use href="#icon-lines"/></svg></span>
+        <h2>Уведомлений пока нет</h2>
+        <p>После добавления новости здесь появится сообщение с её названием и каналом.</p>
+        <a class="btn button button-primary btn-primary" href="{% url 'news:create' %}">Добавить первую новость<svg class="icon"><use href="#icon-arrow"/></svg></a>
+    </section>
+    {% endfor %}
+</div>
+{% endblock %}

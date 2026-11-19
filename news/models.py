@@ -13,6 +13,24 @@ class Source(models.Model):
         return self.title
 
 
+class Notification(models.Model):
+    publication = models.OneToOneField(
+        "Publication", on_delete=models.CASCADE, related_name="notification",
+        verbose_name="Публикация",
+    )
+    event_type = models.CharField(
+        "Событие", max_length=32, default="publication_created",
+        choices=[("publication_created", "Публикация добавлена")],
+    )
+    created_at = models.DateTimeField("Время события", auto_now_add=True)
+    read_at = models.DateTimeField("Время прочтения", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Уведомление"
+        verbose_name_plural = "Уведомления"
+        ordering = ["-created_at", "-id"]
+
+
 class Publication(models.Model):
     source = models.ForeignKey(
         Source, on_delete=models.CASCADE, related_name="publications",

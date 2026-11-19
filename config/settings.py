@@ -58,7 +58,10 @@ TEMPLATES = [
         "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
-            "context_processors": ["django.template.context_processors.request"],
+            "context_processors": [
+                "django.template.context_processors.request",
+                "news.context_processors.notification_badge",
+            ],
         },
     }
 ]

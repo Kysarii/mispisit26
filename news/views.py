@@ -1,10 +1,13 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.http import require_GET, require_http_methods
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 from .forms import NewsForm
-from .storage import DuplicateNewsError, StorageError, create_news, get_news, list_news
+from .storage import (
+    DuplicateNewsError, StorageError, create_news, get_news, list_news,
+    list_notifications, mark_notification_read,
+)
 
 
 def _render_error(request, *, action, reasons, status=400, is_demo=False):
@@ -25,9 +28,9 @@ def _render_error(request, *, action, reasons, status=400, is_demo=False):
 def _storage_error(request):
     return _render_error(
         request,
-        action="открыть или сохранить новости",
+        action="открыть или сохранить данные",
         reasons=[
-            "Хранилище новостей временно недоступно. Действие не выполнено. "
+            "Хранилище данных временно недоступно. Действие не выполнено. "
             "Попробуйте позже или обратитесь к администратору."
         ],
         status=503,
@@ -118,6 +121,35 @@ def action_error(request):
         if is_demo else error["reasons"]
     )
     return _render_error(request, action="добавить публикацию в базу", reasons=reasons, is_demo=is_demo)
+
+
+@require_GET
+def notifications(request):
+    try:
+        items = list_notifications()
+    except StorageError:
+        return _storage_error(request)
+    return render(request, "news/notifications.html", {
+        "notifications": items,
+        "unread_count": sum(item.read_at is None for item in items),
+    })
+
+
+@require_POST
+def notification_read(request, notification_id):
+    try:
+        found = mark_notification_read(notification_id)
+    except StorageError:
+        return _storage_error(request)
+    if not found:
+        return _render_error(
+            request, action=f"прочитать уведомление №{notification_id}",
+            reasons=["Уведомление не найдено. Вернитесь к списку уведомлений."],
+            status=404,
+        )
+    response = HttpResponseRedirect(reverse("news:notifications"))
+    response.status_code = 303
+    return response
 
 
 def page_not_found(request, exception):
